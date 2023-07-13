@@ -1,0 +1,27 @@
+#students
+{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 100px;
+}
+#students>div
+{
+    margin: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid green;
+    width:15%;
+    padding: 0 auto;
+    text-align: center;
+}
+button
+{
+    margin:5px;
+    font-size: 20px;
+    border-radius: 7px;
+    padding: 0.2em 0.5em;
+}
+button:hover
+{
+    background-color: yellowgreen;
+}
