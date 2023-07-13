@@ -6,7 +6,7 @@ const intial={
     age:"",
     gender:"Male",
 }
-function Form ({addCrud,editInfo,updateCrud})
+function Form ({editInfo,disProp})
 {
     const[addInfo,setAddinfo]=useState(intial)
     const[edit,setEdit]=useState({name:"",age:"",id:""})
@@ -14,11 +14,11 @@ function Form ({addCrud,editInfo,updateCrud})
     function submit(e)
     {
         e.preventDefault()
+        
         if(editInfo.id!=="")
-        {updateCrud(addInfo)
-        console.log("Sfa",editInfo)}
+        disProp({type:"update",payload:addInfo})
         else
-        addCrud(addInfo)
+        disProp({type:"add",payload:addInfo})
         
 
         setAddinfo(intial)

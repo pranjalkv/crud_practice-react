@@ -1,18 +1,19 @@
 import "./Listt.css";
 
-function Listt({crudInfo,delCrud,editCrud})
+function Listt({crudAr,disProp,editCrud})
 {
     function deleter(e)
     {
-        delCrud(e.target.id)
+        disProp({type:"delete",payload:e.target.id})
+        console.log(crudInfo)
     }
     function editor(e)
     {
-        editCrud(e.target.id)
+       editCrud(e.target.id)
     }
     return(
         <section id="students">
-        {crudInfo.map((ele,i)=><div id={ele.id} key={i}>
+        {crudAr.map((ele,i)=><div id={ele.id} key={i}>
         <h1>{ele.name}</h1>
         <p>UID:{ele.id}</p>
         <p>Age:{ele.age}</p>

@@ -2,39 +2,45 @@ import Form from "./components/Form";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import Listt from "./components/Listt";
 import allInfo from "./components/data";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 
 function App() {
 
-  const[crudInfo,setCrudinfo]=useState(allInfo)
+    
   const[editInfo,setEditinfo]=useState({name:"",age:"",id:""});
 
-  function addCrud(info)
+
+  function reducerFun(crudInfo,action)
   {
-    console.log(info)
-    setCrudinfo([...crudInfo,
-      {...info,id:crudInfo.length+101}])
+    switch(action.type)
+    {
+      case"add":
+       return[...crudInfo,
+      {...action.payload,id:crudInfo.length+101}]
+      
+      case "delete":
+        return crudInfo.filter(del=>del.id!=action.payload)
+
+        case "update":
+           const index=crudInfo.findIndex(u=>u.id==action.payload.id)
+           const newInfo=[...crudInfo]
+           newInfo.splice(index,1,action.payload)
+           setEditinfo({name:"",age:"",id:""})
+           return newInfo;
+        default:
+        console.log("default")
+    }
   }
-  function delCrud(delId)
-  {
-    setCrudinfo(crudInfo.filter(del=>del.id!=delId))
-  }
-  function editCrud(editId)
+const [crudInfo,dispatch]=useReducer(reducerFun ,allInfo)
+    function editCrud(editId)
   {
     setEditinfo(crudInfo.find(ed=>ed.id==editId))
   }
-  function updateCrud(updId)
-  {
-    const index=crudInfo.findIndex(u=>u.id==updId.id)
-  const newInfo=[...crudInfo]
-  newInfo.splice(index,1,updId)
-  setCrudinfo(newInfo)
-  setEditinfo({name:"",age:"",id:""})
-  }
+  
   return (
     <>
-    <Form addCrud={addCrud} editInfo={editInfo} updateCrud={updateCrud}></Form>
-    <Listt crudInfo={crudInfo} delCrud={delCrud} editCrud={editCrud}></Listt>
+    <Form disProp={dispatch} editInfo={editInfo} ></Form>
+    <Listt  disProp={dispatch} editCrud={editCrud} crudAr={crudInfo}></Listt>
     </>
   )
 }
